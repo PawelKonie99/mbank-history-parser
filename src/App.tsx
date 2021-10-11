@@ -114,7 +114,6 @@ function App() {
                     if (!isNaN(parseFloat(positivePrice))) {
                         expenses = expenses + parseFloat(positivePrice);
                     }
-                    // console.log(parseFloat(test));
                 } else {
                     income = income + parseFloat(price);
                 }
