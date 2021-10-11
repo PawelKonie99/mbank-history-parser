@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CSVReader } from "react-papaparse";
 import { ParseResult } from "papaparse";
 
@@ -33,18 +33,6 @@ interface IParsedData {
 }
 
 function App() {
-    const [periodAndOperations, setPeriodAndOperations] = useState<IPeriodAndOperations>({
-        period: "",
-        operationsData: [
-            {
-                date: "",
-                receiver: "",
-                account: "",
-                category: "",
-                price: "",
-            },
-        ],
-    });
     const [parsedData, setParsedData] = useState<IParsedData>();
 
     const handleOnDrop = (data: ParseResult<string>[]) => {
@@ -62,8 +50,7 @@ function App() {
             };
         });
 
-        setPeriodAndOperations({ period, operationsData });
-        setParsedData(parseOperarationsByCategory(periodAndOperations));
+        setParsedData(parseOperarationsByCategory({ period, operationsData }));
     };
 
     const parseOperarationsByCategory = (operations: IPeriodAndOperations): IParsedData => {
@@ -97,8 +84,11 @@ function App() {
     const handleOnRemoveFile = () => {
         console.log("---------------------------");
     };
-    console.log("periodAndOperations", periodAndOperations);
-    console.log("parsedData", parsedData);
+
+    // useEffect(() => {
+    //     console.log("parsedData", parsedData);
+    // }, [parsedData]);
+
     return (
         <>
             <CSVReader
@@ -110,6 +100,9 @@ function App() {
             >
                 <span>Drop CSV file here or click to upload.</span>
             </CSVReader>
+            {parsedData?.clothes.map((element) => (
+                <div key={element.price}>{element.price}</div>
+            ))}
         </>
     );
 }
