@@ -142,10 +142,13 @@ function App() {
                 }}
             >
                 <span>Drop CSV file here or click to upload.</span>
+                {console.log(monthlyBalance)}
+                {console.log(balance)}
+                {console.log(balance - monthlyBalance)}
             </CSVReader>
             <Balance setBalance={setBalance} />
             <Text title={"Bilans konta na początku miesiąca: "} content={balance.toFixed(1).toString()} />
-            <Text title={"Bilans konta na końcu miesiąca: "} content={(balance - monthlyBalance).toFixed(1).toString()} />
+            <Text title={"Bilans konta na końcu miesiąca: "} content={(balance + monthlyBalance).toFixed(1).toString()} />
             <Text title={"Wydatki: "} content={incomeAndExpense?.expenses.toFixed(1).toString()} />
             <Text title={"Przychody: "} content={incomeAndExpense?.income.toFixed(1).toString()} />
             <Text title={"Bilans wydatków: "} content={monthlyBalance.toFixed(1).toString()} />
