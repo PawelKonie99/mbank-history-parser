@@ -3,7 +3,7 @@ import { CSVReader } from "react-papaparse";
 import { ParseResult } from "papaparse";
 import { IIncomeAndExpense, IOperationsData, IParsedData, IPeriodAndOperations } from "./interfaces/operations";
 import { AllCategories } from "./components/AllCategories/AllCategories";
-import { preetyPrice } from "./helpers";
+import { filterCategories, preetyPrice } from "./helpers";
 import { Text } from "./components/Text/Text";
 import { Balance } from "./components/Balance/Balance";
 
@@ -93,11 +93,6 @@ function App() {
                 personal: filterCategories(operations.operationsData, /osobiste/i),
             },
         });
-    };
-
-    //todo move to helpers
-    const filterCategories = (operations: IOperationsData[], regex: RegExp): IPeriodAndOperations["operationsData"] => {
-        return operations.filter((element) => regex.test(element.category));
     };
 
     const handleOnError = (err: string) => {
