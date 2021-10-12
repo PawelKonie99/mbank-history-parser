@@ -125,7 +125,7 @@ function App() {
             income,
         });
     };
-    console.log("test");
+
     const preetyPrice = (price: string) => {
         return price?.replace("PLN", "")?.replace(",", ".").replace(" ", "");
     };
