@@ -3,6 +3,9 @@ import { CSVReader } from "react-papaparse";
 import { ParseResult } from "papaparse";
 import { IIncomeAndExpense, IOperationsData, IParsedData, IPeriodAndOperations } from "./interfaces/operations";
 import { AllCategories } from "./components/AllCategories/AllCategories";
+import { preetyPrice } from "./helpers";
+import { Text } from "./components/Text/Text";
+import { Balance } from "./components/Balance/Balance";
 
 const operationObj = [
     {
@@ -33,7 +36,11 @@ function App() {
             personal: operationObj,
         },
     });
-    const [incomeAndExpense, setIncomeAndExpense] = useState<IIncomeAndExpense>();
+    const [incomeAndExpense, setIncomeAndExpense] = useState<IIncomeAndExpense>({
+        expenses: 0,
+        income: 0,
+    });
+    const [balance, setBalance] = useState<number>(0);
     // const [allOperations, setAllOperations] = useState<IPeriodAndOperations>({
     //     period: "",
     //     operationsData: [
@@ -126,9 +133,7 @@ function App() {
         });
     };
 
-    const preetyPrice = (price: string) => {
-        return price?.replace("PLN", "")?.replace(",", ".").replace(" ", "");
-    };
+    const monthlyBalance = incomeAndExpense?.income - incomeAndExpense?.expenses;
 
     return (
         <>
@@ -143,8 +148,12 @@ function App() {
             >
                 <span>Drop CSV file here or click to upload.</span>
             </CSVReader>
-            <p>wydatki: {incomeAndExpense?.expenses}</p>
-            <p>przychody: {incomeAndExpense?.income}</p>
+            <Balance setBalance={setBalance} />
+            <Text title={"Bilans konta na początku miesiąca: "} content={balance.toFixed(1).toString()} />
+            <Text title={"Bilans konta na końcu miesiąca: "} content={(balance - monthlyBalance).toFixed(1).toString()} />
+            <Text title={"Wydatki: "} content={incomeAndExpense?.expenses.toFixed(1).toString()} />
+            <Text title={"Przychody: "} content={incomeAndExpense?.income.toFixed(1).toString()} />
+            <Text title={"Bilans wydatków: "} content={monthlyBalance.toFixed(1).toString()} />
 
             <AllCategories categories={parsedData.categories} />
         </>
