@@ -58,8 +58,8 @@ function App() {
         const period = data[14].data[0];
         //slice 26 because before is useless info
         const operationsData = data.slice(26).map((item) => {
-            const test = item.data[0].split(";");
-            const [date, receiver, account, category, price] = test;
+            const transactionData = item.data[0].split(";");
+            const [date, receiver, account, category, price] = transactionData;
             return {
                 date,
                 receiver,
@@ -142,9 +142,6 @@ function App() {
                 }}
             >
                 <span>Drop CSV file here or click to upload.</span>
-                {console.log(monthlyBalance)}
-                {console.log(balance)}
-                {console.log(balance - monthlyBalance)}
             </CSVReader>
             <Balance setBalance={setBalance} />
             <Text title={"Bilans konta na początku miesiąca: "} content={balance.toFixed(1).toString()} />
